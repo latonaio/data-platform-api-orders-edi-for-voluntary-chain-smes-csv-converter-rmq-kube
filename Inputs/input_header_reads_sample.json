@@ -1,0 +1,18 @@
+{
+  "result": true,
+  "redis_key": "abcdefg",
+  "filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
+  "api_status_code": 200,
+  "runtime_session_id": "boi9ar543dg91ipdnspi099u231280ab0v8af0ew",
+  "business_partner": 201,
+  "service_label": "FUNCTION_DPFM_ORDERS_EDI_FOR_VOLUNTARY_CHAIN_SMES_CSV_READS",
+  "api_type": "function",
+  "Orders": {
+    "FilePath": "/inputs/orders-edi-for-voluntary-chain-smes/csv/boi9ar543dg91ipdnspi099u231280ab0v8af0ew.csv"
+  },
+  "api_schema": "DPFMOrdersEDIForVoluntaryChainSMEsCSVReads",
+  "accepter": ["All"],
+  "deleted": false,
+  "api_processing_result": true,
+  "api_processing_error": ""
+}

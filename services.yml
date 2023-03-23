@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+  name: data-platform-api-orders-edi-for-vc-smes-csv-converter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+      app: ORDERS
+  template:
+    metadata:
+      labels:
+        run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+        app: ORDERS
+    spec:
+      nodeName: worker
+      hostname: data-platform-api-orders-edi-for-vc-smes-csv-converter
+      containers:
+        - name: data-platform-api-orders-edi-for-vc-smes-csv-converter
+          image: latonaio/data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+          imagePullPolicy: Always
+          env:
+            - name: "RMQ_QUEUE_FROM"
+              value: "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-queue"
+            - name: "RMQ_QUEUE_TO"
+              value: "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-queue"
+            - name: "RMQ_SESSION_CONTROL_QUEUE"
+              value: "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-session-control-queue"
+          envFrom:
+            - configMapRef:
+                name: env-config
+            - secretRef:
+                name: env-secret
+          volumeMounts:
+            - name: csv-persistent-storage
+              mountPath: /inputs/orders-edi-for-voluntary-chain-smes/csv
+      volumes:
+        - name: csv-persistent-storage
+          persistentVolumeClaim:
+            claimName: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+  name: data-platform-api-orders-edi-for-vc-smes-csv-converter
+spec:
+  selector:
+    run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+  type: NodePort
+  ports:
+    - name: api
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30921
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube-pv-volume
+  labels:
+    type: local
+  namespace: default
+spec:
+  storageClassName: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /mnt/data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube-pv-claim
+  namespace: default
+spec:
+  storageClassName: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
