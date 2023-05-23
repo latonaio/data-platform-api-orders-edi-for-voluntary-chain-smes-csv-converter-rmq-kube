@@ -1,9 +1,9 @@
 package main
 
 import (
-	dpfm_api_caller "data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube/DPFM_API_Caller"
-	dpfm_api_input_reader "data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube/DPFM_API_Input_Reader"
-	"data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube/config"
+	dpfm_api_caller "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube/DPFM_API_Caller"
+	dpfm_api_input_reader "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube/DPFM_API_Input_Reader"
+	"data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube/config"
 	"fmt"
 	"time"
 
@@ -71,8 +71,8 @@ func getSessionID(data map[string]interface{}) string {
 func callProcess(rmq *rabbitmq.RabbitmqClient, caller *dpfm_api_caller.DPFMAPICaller, reader *dpfm_api_input_reader.FileReader, f *dpfm_api_input_reader.Request) error {
 	var err error
 	switch f.ServiceLabel {
-	case "FUNCTION_DPFM_ORDERS_EDI_FOR_SMES_CSV_READS":
-		err = caller.OrdersEdiForSmes(rmq, reader, f)
+	case "FUNCTION_DPFM_ORDERS_EDI_FOR_VOLUNTARY_CHAIN_SMES_CSV_READS":
+		err = caller.OrdersEdiForVoluntaryChainSmes(rmq, reader, f)
 	default:
 		return xerrors.Errorf("unknown API %s", f.ServiceLabel)
 	}

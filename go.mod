@@ -1,4 +1,4 @@
-module data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
+module data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
 
 go 1.19
 
