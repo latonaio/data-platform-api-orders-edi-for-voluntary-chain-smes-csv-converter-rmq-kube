@@ -1,22 +1,22 @@
-# data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+# data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
 
-data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube は、周辺業務システム　を データ連携基盤 と統合することを目的に、API で CSV形式のファイルで受け取ったオーダーデータを読み込んで、データ連携基盤のフォーマットに変換するマイクロサービスです。  
+data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube は、周辺業務システム　を データ連携基盤 と統合することを目的に、API で CSV形式のファイルで受け取ったオーダーデータを読み込んで、データ連携基盤のフォーマットに変換するマイクロサービスです。  
 https://xxx.xxx.io/api/API_ORDERS_SRV/creates/
 
 ## 動作環境
 
-data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube の動作環境は、次の通りです。  
+data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube の動作環境は、次の通りです。  
 ・ OS: LinuxOS （必須）  
 ・ CPU: ARM/AMD/Intel（いずれか必須）  
 
 
 ## 本レポジトリ が 対応する API サービス
-data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube が対応する APIサービス は、次のものです。
+data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube が対応する APIサービス は、次のものです。
 
 APIサービス URL: https://xxx.xxx.io/api/DPFM_FUNCTION_ORDERS_CSV_CONVERTER_SRV/reads/
 
 ## 本レポジトリ に 含まれる API名
-data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube には、次の API をコールするためのリソースが含まれています。  
+data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube には、次の API をコールするためのリソースが含まれています。  
 
 * A_Header（データ連携基盤 オーダーCSV変換 - ヘッダデータ）
 * A_Partner（データ連携基盤 オーダーCSV変換 - 取引先データ）
@@ -28,7 +28,7 @@ data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube に
  
 
 ## API への 値入力条件 の 初期値
-data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
+data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
 
 ## データ連携基盤のAPIの選択的コール
 

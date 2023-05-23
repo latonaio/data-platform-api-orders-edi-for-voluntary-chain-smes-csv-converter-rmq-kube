@@ -2,33 +2,33 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: data-platform-api-orders-edi-for-vc-smes-csv-converter
-  name: data-platform-api-orders-edi-for-vc-smes-csv-converter
+    run: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
+  name: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+      run: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
       app: ORDERS
   template:
     metadata:
       labels:
-        run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+        run: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
         app: ORDERS
     spec:
       nodeName: worker
-      hostname: data-platform-api-orders-edi-for-vc-smes-csv-converter
+      hostname: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
       containers:
-        - name: data-platform-api-orders-edi-for-vc-smes-csv-converter
-          image: latonaio/data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+        - name: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
+          image: latonaio/data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
           imagePullPolicy: Always
           env:
             - name: "RMQ_QUEUE_FROM"
-              value: "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-queue"
+              value: "data-platform-api-orders-edi-for-smes-csv-converter-queue"
             - name: "RMQ_QUEUE_TO"
-              value: "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-queue"
+              value: "data-platform-api-orders-edi-for-smes-csv-converter-queue"
             - name: "RMQ_SESSION_CONTROL_QUEUE"
-              value: "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-session-control-queue"
+              value: "data-platform-api-orders-edi-for-smes-csv-converter-session-control-queue"
           envFrom:
             - configMapRef:
                 name: env-config
@@ -36,52 +36,52 @@ spec:
                 name: env-secret
           volumeMounts:
             - name: csv-persistent-storage
-              mountPath: /inputs/orders-edi-for-voluntary-chain-smes/csv
+              mountPath: /inputs/orders-edi-for-smes/csv
       volumes:
         - name: csv-persistent-storage
           persistentVolumeClaim:
-            claimName: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube-pv-claim
+            claimName: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube-pv-claim
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: data-platform-api-orders-edi-for-vc-smes-csv-converter
-  name: data-platform-api-orders-edi-for-vc-smes-csv-converter
+    run: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
+  name: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
 spec:
   selector:
-    run: data-platform-api-orders-edi-for-vc-smes-csv-converter
+    run: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
   type: NodePort
   ports:
     - name: api
       port: 8080
       protocol: TCP
       targetPort: 8080
-      nodePort: 30921
+      nodePort: 30916
 ---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube-pv-volume
+  name: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube-pv-volume
   labels:
     type: local
   namespace: default
 spec:
-  storageClassName: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+  storageClassName: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /mnt/data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+    path: /mnt/data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube-pv-claim
+  name: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube-pv-claim
   namespace: default
 spec:
-  storageClassName: data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube
+  storageClassName: data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube
   accessModes:
     - ReadWriteMany
   resources:

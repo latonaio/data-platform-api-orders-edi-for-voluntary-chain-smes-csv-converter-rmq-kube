@@ -3,9 +3,9 @@ package dpfmapicaller
 import (
 	"bufio"
 	"context"
-	dpfm_api_input_reader "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube/DPFM_API_Input_Reader"
-	dpfm_api_output_formatter "data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube/DPFM_API_Output_Formatter"
-	"data-platform-api-orders-edi-for-voluntary-chain-smes-csv-converter-rmq-kube/config"
+	dpfm_api_input_reader "data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube/DPFM_API_Input_Reader"
+	dpfm_api_output_formatter "data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube/DPFM_API_Output_Formatter"
+	"data-platform-api-orders-edi-for-smes-csv-converter-rmq-kube/config"
 	"io/ioutil"
 	"os"
 
@@ -30,7 +30,7 @@ func NewDPFMAPICaller(
 	}
 }
 
-func (c *DPFMAPICaller) OrdersEdiForVoluntaryChainSmes(rmq *rabbitmq.RabbitmqClient, reader *dpfm_api_input_reader.FileReader, f *dpfm_api_input_reader.Request) error {
+func (c *DPFMAPICaller) OrdersEdiForSmes(rmq *rabbitmq.RabbitmqClient, reader *dpfm_api_input_reader.FileReader, f *dpfm_api_input_reader.Request) error {
 	err := deleteSecondRow(f.Orders.FilePath)
 	if err != nil {
 		err = xerrors.Errorf("delete second row error: %w", err)
@@ -117,7 +117,7 @@ func (c *DPFMAPICaller) setHeaderData(ordersMessage *dpfm_api_output_formatter.D
 		APIStatusCode:       f.APIStatusCode,
 		RuntimeSessionID:    f.RuntimeSessionID,
 		BusinessPartnerID:   f.BusinessPartnerID,
-		ServiceLabel:        "FUNCTION_ORDERS_EDI_FOR_VOLUNTARY_CHAIN_SMES_DATA_CONCATENATION",
+		ServiceLabel:        "FUNCTION_ORDERS_EDI_FOR_SMES_DATA_CONCATENATION",
 		APIType:             f.APIType,
 		DataConcatenation:   ordersMessage,
 		APISchema:           "DPFMDataConcatenation",
@@ -141,7 +141,7 @@ func (c *DPFMAPICaller) createHeaderData(f *dpfm_api_input_reader.Request, apiEr
 		APIStatusCode:       f.APIStatusCode,
 		RuntimeSessionID:    f.RuntimeSessionID,
 		BusinessPartnerID:   f.BusinessPartnerID,
-		ServiceLabel:        "FUNCTION_ORDERS_EDI_FOR_VOLUNTARY_CHAIN_SMES_DATA_CONCATENATION",
+		ServiceLabel:        "FUNCTION_ORDERS_EDI_FOR_SMES_DATA_CONCATENATION",
 		APIType:             f.APIType,
 		DataConcatenation:   nil,
 		APISchema:           "DPFMDataConcatenation",
